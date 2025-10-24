@@ -1,4 +1,5 @@
 
+
 import os
 import io
 import json
@@ -9,6 +10,98 @@ from fpdf import FPDF
 from PIL import Image
 import speech_recognition as sr
 
+st.markdown("""
+    <style>
+        /* ===== ANIMATED BACKGROUND ===== */
+        @keyframes gradientMove {
+            0% {background-position: 0% 50%;}
+            50% {background-position: 100% 50%;}
+            100% {background-position: 0% 50%;}
+        }
+
+        [data-testid="stAppViewContainer"] {
+            background: linear-gradient(135deg, #a2d2ff, #b9fbc0, #ffe6a7, #ffd6e0);
+            background-size: 400% 400%;
+            animation: gradientMove 18s ease infinite;
+            color: #222;
+        }
+
+        /* ===== SIDEBAR DESIGN ===== */
+        [data-testid="stSidebar"] {
+            background: linear-gradient(180deg, #001f3f, #004080, #0074D9);
+            background-size: 400% 400%;
+            animation: gradientMove 15s ease infinite;
+            color: white !important;
+        }
+        [data-testid="stSidebar"] * {
+            color: white !important;
+        }
+
+        /* ===== BUTTONS ===== */
+        div.stButton > button {
+            background: linear-gradient(90deg, #0074D9, #00BCD4);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 0.6em 1.2em;
+            font-weight: bold;
+            transition: 0.3s ease;
+        }
+        div.stButton > button:hover {
+            background: linear-gradient(90deg, #00BCD4, #0074D9);
+            transform: scale(1.05);
+        }
+
+        /* ===== INPUTS ===== */
+        input, textarea, select {
+            border-radius: 8px !important;
+            border: 1px solid #90caf9 !important;
+        }
+
+        /* ===== TITLES ===== */
+        h1, h2, h3, h4, h5 {
+            font-family: 'Poppins', sans-serif;
+            color: #0d47a1;
+        }
+
+        /* ===== METRIC CARDS ===== */
+        div[data-testid="stMetricValue"] {
+            color: #1565c0;
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        /* ===== LOGIN CARD ===== */
+        .login-bg {
+            background: linear-gradient(-45deg, #4facfe, #00f2fe, #00c6ff, #0072ff);
+            background-size: 400% 400%;
+            animation: gradientMove 10s ease infinite;
+            padding: 45px;
+            border-radius: 20px;
+            color: white;
+            text-align: center;
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+        }
+
+        /* ===== CARD CONTAINERS ===== */
+        .card {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0px 2px 6px rgba(0,0,0,0.15);
+            margin-bottom: 20px;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4a90e2;
+            border-radius: 10px;
+        }
+    </style>
+""", unsafe_allow_html=True)
 
 def voice_input(prompt: str) -> str:
     """Capture voice input and convert it to text using Google Speech Recognition."""
@@ -121,7 +214,6 @@ def create_pdf_bytes(resume_text: str, name: str, contact_info: dict = None,
             if 'tmp_path' in locals() and os.path.exists(tmp_path):
                 os.remove(tmp_path)
 
-    
     heading_font = ("Helvetica", 'B', 20)
     body_font = ("Helvetica", '', 12)
     primary_color = (0, 102, 204) if template == "Modern Blue" else (0, 0, 0)
